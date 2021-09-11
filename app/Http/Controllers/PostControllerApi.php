@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Transformers\PostTrasformer;
+
 use App\Http\Transformers\UserTransformer;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Spatie\Fractalistic\Fractal;
-use App\Models\Post\Post;
 use League\Fractal\Manager;
+use League\Fractal\Resource\Collection;
 
 
 class PostControllerApi extends Controller
 {
     public function index(){
 
-        $manager = new Manager();
-        $fractal=new Fractal($manager);
-        return $fractal->collection(User::all(),new UserTransformer());
-
+        $fractal = new Manager();
+        $resource = new Collection(User::with('posts','myCountry')->get(), new UserTransformer());
+        return $array = $fractal->createData($resource)->toArray();
+    }
+    public function getAll(){
+        $fractal = new Manager();
+        $resource = new Collection(User::with('posts.country','myCountry')->get(), new UserTransformer());
+        $array = $fractal->createData($resource)->toArray();
+        return view('index',compact('array'));
     }
 }

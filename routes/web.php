@@ -6,6 +6,7 @@ Use App\Models\User;
 Use App\Models\Country\Country;
 Use App\Models\Post\Post;
 Use App\Models\Comment\Comment;
+use App\Http\Controllers\PostControllerApi;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,7 +19,4 @@ Use App\Models\Comment\Comment;
 |
 */
 
-Route::get('/', function () {
-
-
-});
+Route::get('/',[PostControllerApi::class,'getAll']);

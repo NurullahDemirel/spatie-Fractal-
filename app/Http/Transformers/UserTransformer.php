@@ -15,11 +15,12 @@ class UserTransformer extends TransformerAbstract
         return [
             'id'      => (int) $user->id,
             'name'   => $user->name,
-            'Country'=>$user->myCountry->id .'-'.$user->myCountry->name
+            'country'=>$user->myCountry->name
         ];
     }
     public function includePosts(User $user){
         $posts=$user->posts;
+
         return $this->collection($posts,New PostTrasformer());
     }
 
